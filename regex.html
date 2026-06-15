@@ -1,0 +1,11 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><title>正则测试</title>
+<style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:monospace;background:#0d1117;color:#c9d1d9;padding:1rem;display:flex;flex-direction:column;height:100vh}.row{display:flex;gap:.5rem;margin:.5rem 0}input{flex:1;background:#161b22;border:1px solid #30363d;color:#c9d1d9;padding:.5rem;font-size:14px;border-radius:4px}textarea{flex:1;background:#161b22;border:1px solid #30363d;color:#c9d1d9;padding:.5rem;font-family:monospace;font-size:14px;resize:none;border-radius:4px;margin:.5rem 0}mark{background:#238636;color:white;padding:0 2px;border-radius:2px}</style></head>
+<body><h2 style="color:#58a6ff">🔍 正则表达式测试</h2>
+<div class="row"><input id="pattern" placeholder="正则表达式 (例: \d{4}-\d{2}-\d{2})"><input id="flags" placeholder="修饰符 (g/i/m)" style="max-width:100px"><button onclick="test()" style="background:#238636;color:white;border:none;padding:.5rem 1rem;border-radius:4px;cursor:pointer">测试</button></div>
+<textarea id="text" placeholder="输入测试文本...">2026-06-15 今天是周一
+2026-07-01 下个月</textarea>
+<div id="result" style="white-space:pre-wrap;font-size:14px;line-height:1.6"></div>
+<script>
+function test(){try{const p=document.getElementById('pattern').value,f=document.getElementById('flags').value,t=document.getElementById('text').value;const r=new RegExp(p,f);const matches=[...t.matchAll(r)];if(matches.length===0){document.getElementById('result').innerHTML='<span style="color:#8b949e">无匹配</span>';return}let last=0,html='';for(const m of matches){html+=escapeHtml(t.slice(last,m.index))+'<mark>'+escapeHtml(m[0])+'</mark>';last=m.index+m[0].length;if(m.groups)html+='<br><small style="color:#8b949e">命名组: '+JSON.stringify(m.groups)+'</small>'}html+=escapeHtml(t.slice(last));html+='<br><br><span style="color:#58a6ff">'+matches.length+' 个匹配</span>';for(let i=0;i<Math.min(matches.length,20);i++){const g=[];matches[i].forEach((v,k)=>{if(k>0)g.push(k+': '+v)});html+='<br>['+i+'] '+g.join(' | ')}document.getElementById('result').innerHTML=html}catch(e){document.getElementById('result').innerHTML='<span style="color:#f85149">❌ '+e.message+'</span>'}}
+function escapeHtml(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+</script></body></html>
