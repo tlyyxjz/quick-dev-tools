@@ -1,0 +1,12 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><title>时间戳转换</title>
+<style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:monospace;background:#0d1117;color:#c9d1d9;padding:2rem;max-width:700px;margin:0 auto}h1{color:#58a6ff;margin-bottom:1rem}.row{display:flex;gap:1rem;margin:1rem 0}input{flex:1;background:#161b22;border:1px solid #30363d;color:#c9d1d9;padding:.8rem;font-size:16px;border-radius:4px}button{background:#238636;color:white;border:none;padding:.8rem 1.5rem;border-radius:4px;cursor:pointer}.result{margin-top:1rem;padding:1rem;background:#161b22;border-radius:4px;font-size:14px;line-height:1.8}</style></head>
+<body><h1>⏰ 时间戳转换</h1>
+<div class="row"><input id="ts" type="number" placeholder="Unix时间戳(秒)" style="width:300px"><button onclick="toDate()">→ 日期</button></div>
+<div class="row"><input id="dt" type="datetime-local"><button onclick="toTs()">→ 时间戳</button></div>
+<div id="now" style="color:#8b949e;margin:1rem 0"></div>
+<div class="result" id="result">结果...</div>
+<script>
+setInterval(()=>{document.getElementById('now').textContent='当前时间戳: '+Math.floor(Date.now()/1000)+' | '+new Date().toLocaleString('zh-CN')},1000)
+function toDate(){const d=new Date(parseInt(document.getElementById('ts').value)*1000);document.getElementById('result').textContent=d.toLocaleString('zh-CN')+' | ISO: '+d.toISOString()+' | UTC: '+d.toUTCString()}
+function toTs(){document.getElementById('result').textContent='时间戳: '+Math.floor(new Date(document.getElementById('dt').value).getTime()/1000)}
+</script></body></html>
